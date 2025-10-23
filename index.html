@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Vídeo Básico com JS</title>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+            color: #333;
+        }
+        #video-container {
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        video {
+            width: 100%;
+            max-width: 640px;
+            display: block; /* Remove espaço extra abaixo do vídeo */
+        }
+        #controls {
+            margin-top: 15px;
+        }
+        button {
+            font-size: 16px;
+            padding: 10px 15px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Player de Vídeo com JavaScript</h1>
+
+    <div id="video-container">
+        <video id="meuVideo" width="640" controls>
+            <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+            
+            Seu navegador não suporta o elemento de vídeo.
+        </video>
+    </div>
+
+    <div id="controls">
+        <button id="playBtn">Play</button>
+        <button id="pauseBtn">Pause</button>
+        <button id="stopBtn">Stop (Parar)</button>
+        <button id="rewindBtn">&laquo; Voltar 5s</button>
+        <button id="forwardBtn">Avançar 5s &raquo;</button>
+        <button id="muteBtn">Mudo / Som</button>
+    </div>
+
+    <script>
+        // --- INÍCIO DO JAVASCRIPT ---
+
+        // Etapa A: Obter referências aos elementos HTML
+        // Usamos 'document.getElementById' para "capturar" os elementos do HTML
+        // e armazená-los em variáveis (const) para que possamos usá-los.
+
+        const video = document.getElementById('meuVideo');
+        const playBtn = document.getElementById('playBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const rewindBtn = document.getElementById('rewindBtn');
+        const forwardBtn = document.getElementById('forwardBtn');
+        const muteBtn = document.getElementById('muteBtn');
+
+        // Etapa B: Adicionar "Ouvintes de Eventos" (Event Listeners)
+        // Dizemos ao JavaScript o que fazer quando um evento (como um 'click')
+        // acontecer em cada botão.
+
+        // --- COMANDOS DE VÍDEO ---
+
+        // Comando Play: Quando 'playBtn' for clicado, execute a função video.play()
+        playBtn.addEventListener('click', () => {
+            video.play(); // O método .play() da API de Mídia HTML5 inicia o vídeo
+        });
+
+        // Comando Pause: Quando 'pauseBtn' for clicado, execute a função video.pause()
+        pauseBtn.addEventListener('click', () => {
+            video.pause(); // O método .pause() pausa o vídeo
+        });
+
+        // Comando Stop: Não existe .stop(). O "Stop" é uma combinação de pausar
+        // e voltar o tempo de reprodução (currentTime) para o início (0).
+        stopBtn.addEventListener('click', () => {
+            video.pause();
+            video.currentTime = 0; // 'currentTime' controla a posição (em segundos) do vídeo
+        });
+
+        // Comando Voltar 5s: Pega o tempo atual e subtrai 5 segundos
+        rewindBtn.addEventListener('click', () => {
+            video.currentTime -= 5;
+        });
+
+        // Comando Avançar 5s: Pega o tempo atual e adiciona 5 segundos
+        forwardBtn.addEventListener('click', () => {
+            video.currentTime += 5;
+        });
+
+        // Comando Mudo (Toggle): Inverte o estado atual da propriedade 'muted'
+        muteBtn.addEventListener('click', () => {
+            // 'video.muted' é uma propriedade booleana (true ou false)
+            // 'video.muted = !video.muted' inverte o valor atual.
+            // Se estava 'false' (com som), vira 'true' (mudo).
+            // Se estava 'true' (mudo), vira 'false' (com som).
+            video.muted = !video.muted;
+        });
+        
+        // --- FIM DO JAVASCRIPT ---
+    </script>
+
+</body>
+</html>
