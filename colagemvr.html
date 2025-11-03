@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinema VR com A-Frame e JS</title>
+    
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+
+    <style>
+        /* Estilos normais para os botões 2D */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            color: #333;
+        }
+        /* Vamos fixar os controles no canto da tela */
+        #controls {
+            position: fixed; /* Fixa os botões na tela */
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10; /* Garante que fiquem sobre a cena VR */
+            background: rgba(255, 255, 255, 0.7);
+            padding: 10px;
+            border-radius: 8px;
+        }
+        button {
+            font-size: 16px;
+            padding: 10px 15px;
+            margin: 5px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <a-scene>
+        
+        <a-assets>
+            <video id="meuVideo" 
+                   src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                   crossorigin="anonymous"
+                   loop="true"
+                   preload="auto"
+                   playsinline>
+            </video>
+        </a-assets>
+
+        <a-video src="#meuVideo" width="4.8" height="2.7" position="0 1.6 -3"></a-video>
+
+        <a-sky color="#222222"></a-sky> </a-scene>
+    
+    <div id="controls">
+        <button id="playBtn">Play</button>
+        <button id="pauseBtn">Pause</button>
+        <button id="stopBtn">Stop (Parar)</button>
+        <button id="rewindBtn">&laquo; Voltar 5s</button>
+        <button id="forwardBtn">Avançar 5s &raquo;</button>
+        <button id="muteBtn">Mudo / Som</button>
+    </div>
+
+    <script>
+        // Captura o vídeo dos assets
+        const video = document.getElementById('meuVideo');
+        
+        // Captura os botões
+        const playBtn = document.getElementById('playBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const rewindBtn = document.getElementById('rewindBtn');
+        const forwardBtn = document.getElementById('forwardBtn');
+        const muteBtn = document.getElementById('muteBtn');
+
+        // Adiciona os eventos
+        playBtn.addEventListener('click', () => {
+            video.play();
+        });
+
+        pauseBtn.addEventListener('click', () => {
+            video.pause();
+        });
+
+        stopBtn.addEventListener('click', () => {
+            video.pause();
+            video.currentTime = 0;
+        });
+
+        rewindBtn.addEventListener('click', () => {
+            video.currentTime -= 5;
+        });
+
+        forwardBtn.addEventListener('click', () => {
+            video.currentTime += 5;
+        });
+
+        muteBtn.addEventListener('click', () => {
+            video.muted = !video.muted;
+        });
+        
+    </script>
+
+</body>
+</html>
